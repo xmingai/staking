@@ -22,6 +22,8 @@ const TEAM_VESTING_DATA = {
   claimed: 0,
 };
 
+const MOCK_CURRENT_ADDRESS = "0x2345...781234";
+
 const VESTING_SCHEDULE = [
   { id: 1, month: "April 2026", amount: 2500000, status: "Claimable", date: "2026-04-01" },
   { id: 2, month: "May 2026", amount: 2500000, status: "Claimable", date: "2026-05-01" },
@@ -47,7 +49,7 @@ export default function TeamPage() {
       <div className="mb-8 flex flex-col sm:flex-row sm:items-end justify-between gap-4">
         <div>
           <h1 className="text-2xl font-bold tracking-tight mb-2">Team Vesting</h1>
-          <p className="text-sm text-muted-foreground font-mono">0xA0C1...a875</p>
+          <p className="text-sm text-muted-foreground font-mono">{MOCK_CURRENT_ADDRESS}</p>
         </div>
       </div>
 
@@ -222,8 +224,8 @@ export default function TeamPage() {
                                   : "border-border/60 hover:border-lime/30"
                               }`}
                             >
-                              <div className="font-semibold text-sm">本地址</div>
-                              <div className="text-xs opacity-70 mt-1">Current Address</div>
+                              <div className="font-semibold text-sm">当前地址</div>
+                              <div className="text-xs opacity-70 mt-1 font-mono">{MOCK_CURRENT_ADDRESS}</div>
                             </div>
                             <div
                               onClick={() => setClaimDestination("target")}
