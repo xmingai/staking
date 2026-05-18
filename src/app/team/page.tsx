@@ -23,6 +23,7 @@ const TEAM_VESTING_DATA = {
 };
 
 const MOCK_CURRENT_ADDRESS = "0x2345...781234";
+const MOCK_POOL_ADDRESS = "0xA0C1...a875";
 
 const VESTING_SCHEDULE = [
   { id: 1, month: "April 2026", amount: 2500000, status: "Claimable", date: "2026-04-01" },
@@ -49,7 +50,10 @@ export default function TeamPage() {
       <div className="mb-8 flex flex-col sm:flex-row sm:items-end justify-between gap-4">
         <div>
           <h1 className="text-2xl font-bold tracking-tight mb-2">Team Vesting</h1>
-          <p className="text-sm text-muted-foreground font-mono">{MOCK_CURRENT_ADDRESS}</p>
+          <div className="flex items-center gap-2">
+            <span className="text-xs text-muted-foreground/70 uppercase tracking-wider font-semibold">Pool</span>
+            <p className="text-sm text-muted-foreground font-mono">{MOCK_POOL_ADDRESS}</p>
+          </div>
         </div>
       </div>
 
