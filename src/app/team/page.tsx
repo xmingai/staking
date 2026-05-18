@@ -61,8 +61,8 @@ export default function TeamPage() {
       <div className="mb-8 flex flex-col sm:flex-row sm:items-end justify-between gap-4">
         <div>
           <h1 className="text-2xl font-bold tracking-tight mb-2">Team Vesting</h1>
-          <div className="flex items-center gap-2">
-            <span className="text-xs text-muted-foreground/70 uppercase tracking-wider font-semibold">Pool</span>
+          <div className="flex flex-col gap-0.5">
+            <span className="text-xs text-muted-foreground/70 font-semibold">Pool Address</span>
             <p className="text-sm text-muted-foreground font-mono">{MOCK_POOL_ADDRESS}</p>
           </div>
         </div>
