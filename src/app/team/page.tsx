@@ -233,25 +233,25 @@ export default function TeamPage() {
                           <div className="grid grid-cols-2 gap-4">
                             <div
                               onClick={() => setClaimDestination("current")}
-                              className={`cursor-pointer rounded-2xl border p-4 text-center transition-all ${
+                              className={`cursor-pointer rounded-2xl border py-3 px-4 text-center transition-all ${
                                 claimDestination === "current"
                                   ? "border-lime bg-lime/10 text-lime"
                                   : "border-border/60 hover:border-lime/30"
                               }`}
                             >
                               <div className="font-semibold text-sm">当前地址</div>
-                              <div className="text-xs opacity-70 mt-1 font-mono">{MOCK_CURRENT_ADDRESS}</div>
+                              <div className="text-xs opacity-70 mt-0.5 font-mono">{MOCK_CURRENT_ADDRESS}</div>
                             </div>
                             <div
                               onClick={() => setClaimDestination("target")}
-                              className={`cursor-pointer rounded-2xl border p-4 text-center transition-all ${
+                              className={`cursor-pointer rounded-2xl border py-3 px-4 text-center transition-all ${
                                 claimDestination === "target"
                                   ? "border-lime bg-lime/10 text-lime"
                                   : "border-border/60 hover:border-lime/30"
                               }`}
                             >
                               <div className="font-semibold text-sm">目标地址</div>
-                              <div className="text-xs opacity-70 mt-1">Target Address</div>
+                              <div className="text-xs opacity-70 mt-0.5">Target Address</div>
                             </div>
                           </div>
 
