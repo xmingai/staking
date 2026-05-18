@@ -4,6 +4,14 @@ import { useState } from "react";
 import { formatNumber } from "@/lib/mock-data";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { Lock, Unlock, Gift, Check, Users } from "lucide-react";
 
 const TEAM_VESTING_DATA = {
@@ -25,6 +33,8 @@ const VESTING_SCHEDULE = [
 
 export default function TeamPage() {
   const [claimed, setClaimed] = useState(false);
+  const [claimDestination, setClaimDestination] = useState<"current" | "target">("current");
+  const [targetAddress, setTargetAddress] = useState("");
 
   const handleClaim = () => {
     setClaimed(true);
@@ -184,16 +194,83 @@ export default function TeamPage() {
                     </p>
                   </div>
                   <div className="flex gap-2 shrink-0">
-                    <Button
-                      size="sm"
-                      variant="outline"
-                      disabled={schedule.status === "Locked"}
-                      className="rounded-xl text-xs h-8 border-border/60 hover:border-lime/30 hover:text-lime"
-                      onClick={handleClaim}
-                    >
-                      <Gift className="h-3 w-3 mr-1" />
-                      Claim
-                    </Button>
+                    <Dialog>
+                      <DialogTrigger asChild>
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          disabled={schedule.status === "Locked"}
+                          className="rounded-xl text-xs h-8 border-border/60 hover:border-lime/30 hover:text-lime"
+                        >
+                          <Gift className="h-3 w-3 mr-1" />
+                          Claim
+                        </Button>
+                      </DialogTrigger>
+                      <DialogContent className="sm:max-w-md rounded-3xl border-border/60 bg-background/95 backdrop-blur-xl p-6 shadow-2xl">
+                        <DialogHeader className="mb-4">
+                          <DialogTitle className="text-xl font-bold">Claim to...</DialogTitle>
+                        </DialogHeader>
+                        
+                        <div className="space-y-4 py-2">
+                          {/* Destination Selection */}
+                          <div className="grid grid-cols-2 gap-4">
+                            <div
+                              onClick={() => setClaimDestination("current")}
+                              className={`cursor-pointer rounded-2xl border p-4 text-center transition-all ${
+                                claimDestination === "current"
+                                  ? "border-lime bg-lime/10 text-lime"
+                                  : "border-border/60 hover:border-lime/30"
+                              }`}
+                            >
+                              <div className="font-semibold text-sm">本地址</div>
+                              <div className="text-xs opacity-70 mt-1">Current Address</div>
+                            </div>
+                            <div
+                              onClick={() => setClaimDestination("target")}
+                              className={`cursor-pointer rounded-2xl border p-4 text-center transition-all ${
+                                claimDestination === "target"
+                                  ? "border-lime bg-lime/10 text-lime"
+                                  : "border-border/60 hover:border-lime/30"
+                              }`}
+                            >
+                              <div className="font-semibold text-sm">目标地址</div>
+                              <div className="text-xs opacity-70 mt-1">Target Address</div>
+                            </div>
+                          </div>
+
+                          {/* Target Address Input */}
+                          {claimDestination === "target" && (
+                            <div className="pt-2">
+                              <label className="text-sm font-medium mb-2 block">
+                                Enter Target Address
+                              </label>
+                              <Input
+                                placeholder="0x..."
+                                value={targetAddress}
+                                onChange={(e) => setTargetAddress(e.target.value)}
+                                className="h-12 rounded-xl bg-muted/50 border-border/60 focus-visible:ring-lime"
+                              />
+                            </div>
+                          )}
+                        </div>
+
+                        <div className="mt-6 flex justify-end">
+                          <Button
+                            onClick={handleClaim}
+                            className="w-full sm:w-auto rounded-xl bg-lime text-lime-foreground hover:bg-lime/90 font-semibold px-8 h-12 shadow-[0_0_20px_rgba(191,255,0,0.15)] transition-all"
+                            disabled={claimed || (claimDestination === "target" && !targetAddress)}
+                          >
+                            {claimed ? (
+                              <span className="flex items-center gap-2">
+                                <Check className="h-4 w-4" /> Claimed!
+                              </span>
+                            ) : (
+                              "确认 Claim"
+                            )}
+                          </Button>
+                        </div>
+                      </DialogContent>
+                    </Dialog>
                   </div>
                 </div>
               </div>
