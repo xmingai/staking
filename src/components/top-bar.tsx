@@ -10,6 +10,7 @@ const NAV_ITEMS = [
   { href: "/", label: "Home" },
   { href: "/nodes", label: "Community Nodes" },
   { href: "/llm-providers", label: "LLM Providers" },
+  { href: "/team", label: "Team" },
 ];
 
 export function TopBar() {
