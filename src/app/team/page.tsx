@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { formatNumber } from "@/lib/mock-data";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -38,8 +38,19 @@ export default function TeamPage() {
   const [claimed, setClaimed] = useState(false);
   const [claimDestination, setClaimDestination] = useState<"current" | "target">("current");
   const [targetAddress, setTargetAddress] = useState("");
+  const [saveAsDefault, setSaveAsDefault] = useState(false);
+
+  useEffect(() => {
+    const saved = localStorage.getItem("defaultTargetAddress");
+    if (saved) {
+      setTargetAddress(saved);
+    }
+  }, []);
 
   const handleClaim = () => {
+    if (claimDestination === "target" && saveAsDefault && targetAddress) {
+      localStorage.setItem("defaultTargetAddress", targetAddress);
+    }
     setClaimed(true);
     setTimeout(() => setClaimed(false), 3000);
   };
@@ -246,7 +257,7 @@ export default function TeamPage() {
 
                           {/* Target Address Input */}
                           {claimDestination === "target" && (
-                            <div className="pt-2">
+                            <div className="pt-2 animate-in fade-in slide-in-from-top-2 duration-200">
                               <label className="text-sm font-medium mb-2 block">
                                 Enter Target Address
                               </label>
@@ -254,8 +265,24 @@ export default function TeamPage() {
                                 placeholder="0x..."
                                 value={targetAddress}
                                 onChange={(e) => setTargetAddress(e.target.value)}
-                                className="h-12 rounded-xl bg-muted/50 border-border/60 focus-visible:ring-lime"
+                                className="h-12 rounded-xl bg-muted/50 border-border/60 focus-visible:ring-lime font-mono text-sm"
                               />
+                              <div className="mt-3 flex items-center gap-2">
+                                <label className="flex items-center gap-2 cursor-pointer group">
+                                  <div className="relative flex items-center justify-center w-4 h-4">
+                                    <input
+                                      type="checkbox"
+                                      checked={saveAsDefault}
+                                      onChange={(e) => setSaveAsDefault(e.target.checked)}
+                                      className="peer appearance-none w-4 h-4 rounded-sm border border-muted-foreground/50 checked:bg-lime checked:border-lime transition-all cursor-pointer"
+                                    />
+                                    <Check className="absolute h-3 w-3 text-lime-foreground opacity-0 peer-checked:opacity-100 pointer-events-none transition-opacity" />
+                                  </div>
+                                  <span className="text-xs text-muted-foreground group-hover:text-foreground transition-colors">
+                                    Save as default target address
+                                  </span>
+                                </label>
+                              </div>
                             </div>
                           )}
                         </div>
