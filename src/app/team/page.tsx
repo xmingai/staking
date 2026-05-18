@@ -49,6 +49,7 @@ export default function TeamPage() {
             label: "Total Allocation",
             value: formatNumber(TEAM_VESTING_DATA.totalAllocation),
             suffix: "DGAI",
+            highlight: false,
           },
           {
             icon: Lock,
